@@ -73,6 +73,15 @@ export interface ChooseUs extends RowDataPacket {
   updated_at: Date;
 }
 
+export interface ChooseUsReason extends RowDataPacket {
+  id: string;
+  icon: string | null;
+  title: string | null;
+  description: string | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
 export interface SolutionsSection extends RowDataPacket {
   id: string;
 

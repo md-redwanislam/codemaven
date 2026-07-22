@@ -5,16 +5,17 @@ import { getDataUri } from '../common/utils/data-uri';
 
 @Injectable()
 export class CloudinaryService {
+  private readonly ROOT_FOLDER = 'CodeMaven';
   constructor(
     @Inject('CLOUDINARY')
     private readonly cloudinary: typeof Cloudinary,
   ) {}
 
-  async uploadImage(file: Express.Multer.File) {
+  async uploadImage(file: Express.Multer.File, folder: string) {
     const fileUri = getDataUri(file);
 
     const result = await this.cloudinary.uploader.upload(fileUri.content!, {
-      folder: 'CodeMaven/hero',
+      folder: `${this.ROOT_FOLDER}/${folder}`,
     });
 
     return {
@@ -22,7 +23,6 @@ export class CloudinaryService {
       publicId: result.public_id,
     };
   }
-
   async deleteImage(publicId: string) {
     await this.cloudinary.uploader.destroy(publicId);
   }
