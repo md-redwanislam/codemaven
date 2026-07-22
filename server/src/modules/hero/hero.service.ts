@@ -92,10 +92,17 @@ export class HeroService {
     LIMIT 1
     `,
     );
+    if (!rows.length) {
+      return {
+        success: false,
+        message: 'No data found.',
+      };
+    }
 
     return {
       success: true,
-      data: rows[0] ?? null,
+      message: 'Hero section retrieved successfully.',
+      data: rows[0],
     };
   }
 

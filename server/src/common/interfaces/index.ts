@@ -2,8 +2,8 @@ import { RowDataPacket } from 'mysql2';
 
 export interface Admin extends RowDataPacket {
   id: string;
-  email: string;
-  password: string;
+  email: string | null;
+  password: string | null;
   created_at: Date;
   updated_at: Date;
 }
@@ -11,15 +11,15 @@ export interface Admin extends RowDataPacket {
 export interface HeroSection extends RowDataPacket {
   id: string;
 
-  headline_1: string;
-  headline_2: string;
-  description: string;
+  headline_1: string | null;
+  headline_2: string | null;
+  description: string | null;
 
-  primary_button_text: string;
-  primary_button_url: string;
+  primary_button_text: string | null;
+  primary_button_url: string | null;
 
-  secondary_button_text: string;
-  secondary_button_url: string;
+  secondary_button_text: string | null;
+  secondary_button_url: string | null;
 
   ratings: string | null;
   rating_text: string | null;
@@ -32,14 +32,14 @@ export interface HeroSection extends RowDataPacket {
 export interface CTA extends RowDataPacket {
   id: string;
 
-  heading: string;
-  description: string;
+  heading: string | null;
+  description: string | null;
 
-  primary_button_text: string;
-  primary_button_url: string;
+  primary_button_text: string | null;
+  primary_button_url: string | null;
 
-  secondary_button_text: string;
-  secondary_button_url: string;
+  secondary_button_text: string | null;
+  secondary_button_url: string | null;
 
   created_at: Date;
   updated_at: Date;
@@ -48,12 +48,12 @@ export interface CTA extends RowDataPacket {
 export interface FAQ extends RowDataPacket {
   id: string;
 
-  eyebrow_text: string;
-  heading: string;
-  subtext: string;
+  eyebrow_text: string | null;
+  heading: string | null;
+  subtext: string | null;
 
-  button_text: string;
-  button_url: string;
+  button_text: string | null;
+  button_url: string | null;
 
   created_at: Date;
   updated_at: Date;
@@ -62,12 +62,12 @@ export interface FAQ extends RowDataPacket {
 export interface ChooseUs extends RowDataPacket {
   id: string;
 
-  eyebrow_text: string;
-  heading: string;
-  subtext: string;
+  eyebrow_text: string | null;
+  heading: string | null;
+  subtext: string | null;
 
-  button_text: string;
-  button_url: string;
+  button_text: string | null;
+  button_url: string | null;
 
   created_at: Date;
   updated_at: Date;
@@ -76,8 +76,8 @@ export interface ChooseUs extends RowDataPacket {
 export interface SolutionsSection extends RowDataPacket {
   id: string;
 
-  eyebrow_text: string;
-  heading: string;
+  eyebrow_text: string | null;
+  heading: string | null;
 
   created_at: Date;
   updated_at: Date;
@@ -86,8 +86,8 @@ export interface SolutionsSection extends RowDataPacket {
 export interface ServiceSection extends RowDataPacket {
   id: string;
 
-  eyebrow_text: string;
-  heading: string;
+  eyebrow_text: string | null;
+  heading: string | null;
 
   created_at: Date;
   updated_at: Date;
@@ -96,7 +96,7 @@ export interface ServiceSection extends RowDataPacket {
 export interface LogoSection extends RowDataPacket {
   id: string;
 
-  eyebrow_text: string;
+  eyebrow_text: string | null;
 
   created_at: Date;
   updated_at: Date;
@@ -105,9 +105,9 @@ export interface LogoSection extends RowDataPacket {
 export interface ContactSection extends RowDataPacket {
   id: string;
 
-  eyebrow_text: string;
-  heading: string;
-  description: string;
+  eyebrow_text: string | null;
+  heading: string | null;
+  description: string | null;
 
   created_at: Date;
   updated_at: Date;

@@ -13,6 +13,8 @@ import { SolutionsSectionModule } from './modules/solutions-section/solutions-se
 
 import config from './config/config';
 import { FaqModule } from './modules/faq/faq.module';
+import { PublicCtaModule } from './public/public-cta/public-cta.module';
+import { PublicHeroModule } from './public/public-hero/public-hero.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { FaqModule } from './modules/faq/faq.module';
     ServiceSectionModule,
     LogoSectionModule,
     ContactSectionModule,
+    PublicCtaModule,
+    PublicHeroModule,
   ],
 })
 export class AppModule {}
