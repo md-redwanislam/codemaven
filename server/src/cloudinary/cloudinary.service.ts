@@ -24,6 +24,7 @@ export class CloudinaryService {
     };
   }
   async deleteImage(publicId: string) {
+    console.log('Public Id- ', publicId);
     await this.cloudinary.uploader.destroy(publicId);
   }
 }

@@ -1,7 +1,7 @@
 import { Provider } from '@nestjs/common';
 import { createPool, Pool } from 'mysql2/promise';
 
-import config from '../config/config';
+import config from '../common/config/config';
 import { DATABASE_CONNECTION } from './database.constant';
 
 const configuration = config();
@@ -28,7 +28,7 @@ export const databaseProvider: Provider = {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
-      connectTimeout: 30000,
+      connectTimeout: 350000,
     });
 
     const connection = await db.getConnection();

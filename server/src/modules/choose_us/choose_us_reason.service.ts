@@ -13,6 +13,7 @@ import { CloudinaryService } from '../../cloudinary/cloudinary.service';
 
 import { ChooseUsReason } from '../../common/interfaces';
 import { CreateChooseUsReasonDto } from './dto/create-choose_us_reason.dto';
+import { UpdateChooseUsReasonDto } from './dto/update-choose_us_reason.dto';
 
 @Injectable()
 export class ChooseUsReasonService {
@@ -87,71 +88,94 @@ export class ChooseUsReasonService {
     };
   }
 
-  //   async update(id: string, dto: UpdateChooseUsReasonDto) {
-  //     const [rows] = await this.db.execute<ChooseUsReason[]>(
-  //       `
-  //       SELECT
-  //         BIN_TO_UUID(id) AS id,
-  //         icon,
-  //         title,
-  //         description
-  //       FROM choose_us_reason
-  //       WHERE id = UUID_TO_BIN(?)
-  //       LIMIT 1
-  //       `,
-  //       [id],
-  //     );
+  async update(
+    id: string,
+    dto: UpdateChooseUsReasonDto,
+    file?: Express.Multer.File,
+  ) {
+    const [rows] = await this.db.execute<ChooseUsReason[]>(
+      `
+        SELECT
+          BIN_TO_UUID(id) AS id,
+          icon,
+          public_id,
+          title,
+          description
+        FROM choose_us_reason
+        WHERE id = UUID_TO_BIN(?)
+        LIMIT 1
+        `,
+      [id],
+    );
 
-  //     if (rows.length === 0) {
-  //       throw new NotFoundException('Choose us reason not found.');
-  //     }
+    if (rows.length === 0) {
+      throw new NotFoundException('Choose us reason not found.');
+    }
 
-  //     const reason = rows[0];
+    const reason = rows[0];
 
-  //     if (dto.title && dto.title !== reason.title) {
-  //       const [duplicate] = await this.db.execute<ChooseUsReason[]>(
-  //         `
-  //         SELECT id
-  //         FROM choose_us_reason
-  //         WHERE title = ?
-  //         AND id != UUID_TO_BIN(?)
-  //         LIMIT 1
-  //         `,
-  //         [dto.title, id],
-  //       );
+    if (dto.title && dto.title !== reason.title) {
+      const [duplicate] = await this.db.execute<ChooseUsReason[]>(
+        `
+          SELECT id
+          FROM choose_us_reason
+          WHERE title = ?
+          AND id != UUID_TO_BIN(?)
+          LIMIT 1
+          `,
+        [dto.title, id],
+      );
 
-  //       if (duplicate.length > 0) {
-  //         throw new BadRequestException('Choose us reason already exists.');
-  //       }
-  //     }
+      if (duplicate.length > 0) {
+        throw new BadRequestException('Choose us reason already exists.');
+      }
+    }
 
-  //     await this.db.execute<ResultSetHeader>(
-  //       `
-  //       UPDATE choose_us_reason
-  //       SET
-  //         icon = ?,
-  //         title = ?,
-  //         description = ?
-  //       WHERE id = UUID_TO_BIN(?)
-  //       `,
-  //       [
-  //         dto.icon ?? reason.icon,
-  //         dto.title ?? reason.title,
-  //         dto.description ?? reason.description,
-  //         id,
-  //       ],
-  //     );
+    let icon = reason.icon;
+    let publicId = reason.public_id;
 
-  //     return {
-  //       success: true,
-  //       message: 'Choose us reason updated successfully.',
-  //     };
-  //   }
+    if (file) {
+      const uploadedImage = await this.cloudinaryService.uploadImage(
+        file,
+        'choose-us/reason',
+      );
+      icon = uploadedImage.url;
+      publicId = uploadedImage.publicId;
+    }
+
+    if (file && reason.public_id) {
+      await this.cloudinaryService.deleteImage(reason.public_id);
+    }
+
+    await this.db.execute<ResultSetHeader>(
+      `
+        UPDATE choose_us_reason
+        SET
+          icon = ?,
+          public_id = ?,
+          title = ?,
+          description = ?
+        WHERE id = UUID_TO_BIN(?)
+        `,
+      [
+        icon,
+        publicId,
+        dto.title ?? reason.title,
+        dto.description ?? reason.description,
+        id,
+      ],
+    );
+
+    return {
+      success: true,
+      message: 'Choose us reason updated successfully.',
+    };
+  }
 
   async remove(id: string) {
     const [rows] = await this.db.execute<ChooseUsReason[]>(
       `
-      SELECT id
+      SELECT id, public_id
       FROM choose_us_reason
       WHERE id = UUID_TO_BIN(?)
       LIMIT 1
@@ -159,8 +183,15 @@ export class ChooseUsReasonService {
       [id],
     );
 
+    console.log(rows);
+    console.log(id);
+
     if (rows.length === 0) {
       throw new NotFoundException('Choose us reason not found.');
+    }
+
+    if (rows[0].public_id) {
+      await this.cloudinaryService.deleteImage(rows[0].public_id);
     }
 
     await this.db.execute<ResultSetHeader>(

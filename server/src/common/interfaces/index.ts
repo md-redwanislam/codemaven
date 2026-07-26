@@ -59,6 +59,16 @@ export interface FAQ extends RowDataPacket {
   updated_at: Date;
 }
 
+export interface Add_FAQ extends RowDataPacket {
+  id: string;
+
+  question: string | null;
+  answer: string | null;
+
+  created_at: Date;
+  updated_at: Date;
+}
+
 export interface ChooseUs extends RowDataPacket {
   id: string;
 
@@ -76,6 +86,17 @@ export interface ChooseUs extends RowDataPacket {
 export interface ChooseUsReason extends RowDataPacket {
   id: string;
   icon: string | null;
+  public_id: string | null;
+  title: string | null;
+  description: string | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface IndustryCard extends RowDataPacket {
+  id: string;
+  icon: string | null;
+  public_id: string | null;
   title: string | null;
   description: string | null;
   created_at: Date;
@@ -102,11 +123,31 @@ export interface ServiceSection extends RowDataPacket {
   updated_at: Date;
 }
 
+export interface ServiceCard extends RowDataPacket {
+  id: string;
+  icon: string | null;
+  public_id: string | null;
+  title: string | null;
+  description: string | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
 export interface LogoSection extends RowDataPacket {
   id: string;
 
   eyebrow_text: string | null;
 
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface AddLogo extends RowDataPacket {
+  id: string;
+  logo: string | null;
+  public_id: string | null;
+  name: string | null;
+  status: string | null;
   created_at: Date;
   updated_at: Date;
 }
