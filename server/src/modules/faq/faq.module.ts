@@ -13,5 +13,7 @@ import { FaqService } from './faq.service';
   controllers: [FaqController, AddFaqController],
 
   providers: [FaqService, AddFaqService],
+
+  exports: [FaqService, AddFaqService],
 })
 export class FaqModule {}

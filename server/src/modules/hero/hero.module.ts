@@ -11,5 +11,7 @@ import { HeroService } from './hero.service';
   controllers: [HeroController],
 
   providers: [HeroService],
+
+  exports: [HeroService],
 })
 export class HeroModule {}

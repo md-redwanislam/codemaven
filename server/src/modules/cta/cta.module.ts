@@ -6,6 +6,7 @@ import { CtaController } from './cta.controller';
 import { CtaService } from './cta.service';
 
 @Module({
+  exports: [CtaService],
   imports: [DatabaseModule],
 
   controllers: [CtaController],

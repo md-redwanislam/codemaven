@@ -15,6 +15,7 @@ import config from './common/config/config';
 import { FaqModule } from './modules/faq/faq.module';
 import { PublicCtaModule } from './public/public-cta/public-cta.module';
 import { PublicHeroModule } from './public/public-hero/public-hero.module';
+import { StatisticModule } from './modules/statistic/statistic.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { PublicHeroModule } from './public/public-hero/public-hero.module';
     ContactSectionModule,
     PublicCtaModule,
     PublicHeroModule,
+    StatisticModule,
   ],
 })
 export class AppModule {}

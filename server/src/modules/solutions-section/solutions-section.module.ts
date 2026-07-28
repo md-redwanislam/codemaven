@@ -14,5 +14,7 @@ import { SolutionsSectionService } from './solutions-section.service';
   controllers: [SolutionsSectionController, IndustryCardController],
 
   providers: [SolutionsSectionService, IndustryCardService],
+
+  exports: [SolutionsSectionService, IndustryCardService],
 })
 export class SolutionsSectionModule {}

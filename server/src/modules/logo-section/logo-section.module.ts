@@ -14,5 +14,7 @@ import { LogoSectionService } from './logo-section.service';
   controllers: [LogoSectionController, AddLogoController],
 
   providers: [LogoSectionService, AddLogoService],
+
+  exports: [LogoSectionService, AddLogoService],
 })
 export class LogoSectionModule {}

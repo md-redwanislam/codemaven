@@ -14,5 +14,7 @@ import { ServiceSectionService } from './service-section.service';
   controllers: [ServiceSectionController, ServiceCardController],
 
   providers: [ServiceSectionService, ServiceCardService],
+
+  exports: [ServiceSectionService, ServiceCardService],
 })
 export class ServiceSectionModule {}

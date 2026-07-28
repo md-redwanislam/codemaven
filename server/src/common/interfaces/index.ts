@@ -8,6 +8,16 @@ export interface Admin extends RowDataPacket {
   updated_at: Date;
 }
 
+export interface Statistic extends RowDataPacket {
+  id: string;
+
+  label: string;
+  label_value: number;
+
+  created_at: Date;
+  updated_at: Date;
+}
+
 export interface HeroSection extends RowDataPacket {
   id: string;
 
@@ -147,7 +157,7 @@ export interface AddLogo extends RowDataPacket {
   logo: string | null;
   public_id: string | null;
   name: string | null;
-  status: string | null;
+  status: boolean | null;
   created_at: Date;
   updated_at: Date;
 }

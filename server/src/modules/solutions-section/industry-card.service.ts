@@ -39,7 +39,7 @@ export class IndustryCardService {
     }
 
     if (!file) {
-      throw new BadRequestException('Icon image is required.');
+      throw new BadRequestException('Industry card image is required.');
     }
 
     const { url, publicId } = await this.cloudinaryService.uploadImage(
@@ -51,7 +51,7 @@ export class IndustryCardService {
       `
       INSERT INTO industry_card
       (
-        icon,
+        image,
         public_id,
         title,
         description
@@ -72,7 +72,7 @@ export class IndustryCardService {
       `
       SELECT
         BIN_TO_UUID(id) AS id,
-        icon,
+        image,
         title,
         description,
         created_at,
@@ -97,7 +97,7 @@ export class IndustryCardService {
       `
       SELECT
         BIN_TO_UUID(id) AS id,
-        icon,
+        image,
         public_id,
         title,
         description
@@ -131,7 +131,7 @@ export class IndustryCardService {
       }
     }
 
-    let icon = card.icon;
+    let image = card.image;
     let publicId = card.public_id;
 
     if (file) {
@@ -140,7 +140,7 @@ export class IndustryCardService {
         'industry-card',
       );
 
-      icon = uploadedImage.url;
+      image = uploadedImage.url;
       publicId = uploadedImage.publicId;
     }
 
@@ -152,14 +152,14 @@ export class IndustryCardService {
       `
       UPDATE industry_card
       SET
-        icon = ?,
+        image = ?,
         public_id = ?,
         title = ?,
         description = ?
       WHERE id = UUID_TO_BIN(?)
       `,
       [
-        icon,
+        image,
         publicId,
         dto.title ?? card.title,
         dto.description ?? card.description,

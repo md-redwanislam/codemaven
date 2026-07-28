@@ -28,12 +28,12 @@ export const databaseProvider: Provider = {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
-      connectTimeout: 350000,
+      connectTimeout: 30000,
     });
 
     const connection = await db.getConnection();
 
-    console.log('MySQL Connected Successfully');
+    console.log('Database Connected Successfully');
 
     connection.release();
 

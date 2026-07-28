@@ -9,6 +9,8 @@ import { ChooseUsReasonController } from './choose_us_reason.controller';
 import { ChooseUsReasonService } from './choose_us_reason.service';
 
 @Module({
+  exports: [ChooseUsService, ChooseUsReasonService],
+
   imports: [DatabaseModule, CloudinaryModule],
 
   controllers: [ChooseUsController, ChooseUsReasonController],

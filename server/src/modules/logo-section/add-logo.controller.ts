@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseBoolPipe,
   Post,
   Put,
   UploadedFile,
@@ -16,8 +17,6 @@ import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { multerOptions } from '../../common/utils/multer';
 
 import { AddLogoService } from './add-logo.service';
-import { CreateAddLogoDto } from './dto/create-add-logo.dto';
-import { UpdateAddLogoDto } from './dto/update-add-logo.dto';
 
 @Controller('admin/home/add-logo')
 @UseGuards(JwtAuthGuard)
@@ -27,10 +26,11 @@ export class AddLogoController {
   @Post()
   @UseInterceptors(FileInterceptor('logo', multerOptions))
   create(
-    @Body() dto: CreateAddLogoDto,
+    @Body('name') name: string,
+    @Body('status', ParseBoolPipe) status: boolean,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.addLogoService.create(dto, file);
+    return this.addLogoService.create({ name, status }, file);
   }
 
   @Get()
@@ -42,10 +42,11 @@ export class AddLogoController {
   @UseInterceptors(FileInterceptor('logo', multerOptions))
   update(
     @Param('id') id: string,
-    @Body() dto: UpdateAddLogoDto,
+    @Body('name') name: string,
+    @Body('status', ParseBoolPipe) status: boolean,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.addLogoService.update(id, dto, file);
+    return this.addLogoService.update(id, { name, status }, file);
   }
 
   @Delete(':id')

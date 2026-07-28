@@ -183,9 +183,6 @@ export class ChooseUsReasonService {
       [id],
     );
 
-    console.log(rows);
-    console.log(id);
-
     if (rows.length === 0) {
       throw new NotFoundException('Choose us reason not found.');
     }
