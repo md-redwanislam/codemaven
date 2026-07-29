@@ -6,7 +6,7 @@ export class PublicHeroController {
   constructor(private readonly heroService: HeroService) {}
 
   @Get()
-  findAll() {
+  findAllHero() {
     return this.heroService.findOne();
   }
 }

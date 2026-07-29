@@ -6,7 +6,7 @@ export class PublicCtaController {
   constructor(private readonly ctaService: CtaService) {}
 
   @Get()
-  findAll() {
+  findAllCta() {
     return this.ctaService.findOne();
   }
 }
