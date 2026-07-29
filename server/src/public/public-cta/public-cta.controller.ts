@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { PublicCtaService } from './public-cta.service';
+import { CtaService } from '../../modules/cta/cta.service';
 
 @Controller('home/cta')
 export class PublicCtaController {
-  constructor(private readonly publicCtaService: PublicCtaService) {}
+  constructor(private readonly ctaService: CtaService) {}
 
   @Get()
   findAll() {
-    return this.publicCtaService.findAll();
+    return this.ctaService.findOne();
   }
 }

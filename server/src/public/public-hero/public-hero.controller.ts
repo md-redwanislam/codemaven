@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { PublicHeroService } from './public-hero.service';
+import { HeroService } from '../../modules/hero/hero.service';
 
 @Controller('home/hero')
 export class PublicHeroController {
-  constructor(private readonly publicHeroService: PublicHeroService) {}
+  constructor(private readonly heroService: HeroService) {}
 
   @Get()
   findAll() {
-    return this.publicHeroService.findAll();
+    return this.heroService.findOne();
   }
 }

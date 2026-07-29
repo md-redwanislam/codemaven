@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { PublicCtaService } from './public-cta.service';
+import { CtaModule } from '../../modules/cta/cta.module';
 import { PublicCtaController } from './public-cta.controller';
 
 @Module({
+  imports: [CtaModule],
   controllers: [PublicCtaController],
-  providers: [PublicCtaService],
 })
 export class PublicCtaModule {}
