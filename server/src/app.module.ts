@@ -1,28 +1,30 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import config from './common/config/config';
 import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { CtaModule } from './modules/cta/cta.module';
-import { HeroModule } from './modules/hero/hero.module';
+import { ChooseUsModule } from './modules/home/choose_us/choose_us.module';
+import { ContactSectionModule } from './modules/home/contact-section/contact-section.module';
+import { CtaModule } from './modules/home/cta/cta.module';
+import { FaqModule } from './modules/home/faq/faq.module';
+import { HeroModule } from './modules/home/hero/hero.module';
+import { LogoSectionModule } from './modules/home/logo-section/logo-section.module';
+import { ServiceSectionModule } from './modules/home/service-section/service-section.module';
+import { SolutionsSectionModule } from './modules/home/solutions-section/solutions-section.module';
+import { StatisticModule } from './modules/home/statistic/statistic.module';
+import { PublicChooseUsModule } from './public/home/public-choose-us/public-choose-us.module';
+import { PublicContactSectionModule } from './public/home/public-contact-section/public-contact-section.module';
+import { PublicCtaModule } from './public/home/public-cta/public-cta.module';
+import { PublicFaqModule } from './public/home/public-faq/public-faq.module';
+import { PublicHeroModule } from './public/home/public-hero/public-hero.module';
+import { PublicLogoSectionModule } from './public/home/public-logo-section/public-logo-section.module';
+import { PublicServiceSectionModule } from './public/home/public-service-section/public-service-section.module';
+import { PublicSolutionsSectionModule } from './public/home/public-solutions-section/public-solutions-section.module';
+import { PublicStatisticModule } from './public/home/public-statistic/public-statistic.module';
 
-import { ChooseUsModule } from './modules/choose_us/choose_us.module';
-import { ContactSectionModule } from './modules/contact-section/contact-section.module';
-import { LogoSectionModule } from './modules/logo-section/logo-section.module';
-import { ServiceSectionModule } from './modules/service-section/service-section.module';
-import { SolutionsSectionModule } from './modules/solutions-section/solutions-section.module';
-
-import config from './common/config/config';
-import { FaqModule } from './modules/faq/faq.module';
-import { StatisticModule } from './modules/statistic/statistic.module';
-import { PublicChooseUsModule } from './public/public-choose-us/public-choose-us.module';
-import { PublicContactSectionModule } from './public/public-contact-section/public-contact-section.module';
-import { PublicCtaModule } from './public/public-cta/public-cta.module';
-import { PublicFaqModule } from './public/public-faq/public-faq.module';
-import { PublicHeroModule } from './public/public-hero/public-hero.module';
-import { PublicLogoSectionModule } from './public/public-logo-section/public-logo-section.module';
-import { PublicServiceSectionModule } from './public/public-service-section/public-service-section.module';
-import { PublicSolutionsSectionModule } from './public/public-solutions-section/public-solutions-section.module';
-import { PublicStatisticModule } from './public/public-statistic/public-statistic.module';
+import { AboutHeroModule } from './modules/about/hero/hero.module';
+import { MissionModule } from './modules/about/mission/mission.module';
+import { WorkProcessModule } from './modules/about/work-process/work-process.module';
 
 @Module({
   imports: [
@@ -50,6 +52,9 @@ import { PublicStatisticModule } from './public/public-statistic/public-statisti
     PublicSolutionsSectionModule,
     PublicStatisticModule,
     StatisticModule,
+    MissionModule,
+    WorkProcessModule,
+    AboutHeroModule,
   ],
 })
 export class AppModule {}
