@@ -25,6 +25,11 @@ import { PublicStatisticModule } from './public/home/public-statistic/public-sta
 import { AboutHeroModule } from './modules/about/hero/hero.module';
 import { MissionModule } from './modules/about/mission/mission.module';
 import { WorkProcessModule } from './modules/about/work-process/work-process.module';
+import { PublicHeroSectionModule } from './public/about/public-hero-section/public-hero-section.module';
+
+import { PublicMissionModule } from './public/about/public-mission/public-mission.module';
+
+import { PublicWorkProcessModule } from './public/about/public-work-process/public-work-process.module';
 
 @Module({
   imports: [
@@ -55,6 +60,9 @@ import { WorkProcessModule } from './modules/about/work-process/work-process.mod
     MissionModule,
     WorkProcessModule,
     AboutHeroModule,
+    PublicHeroSectionModule,
+    PublicMissionModule,
+    PublicWorkProcessModule,
   ],
 })
 export class AppModule {}

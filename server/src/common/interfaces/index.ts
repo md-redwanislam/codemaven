@@ -78,7 +78,7 @@ export interface StatCounter extends RowDataPacket {
   id: string;
 
   label: string | null;
-  label_value: number | null;
+  label_value: string | null;
 
   created_at: Date;
   updated_at: Date;

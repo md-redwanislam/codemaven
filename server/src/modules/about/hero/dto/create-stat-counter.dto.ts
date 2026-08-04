@@ -1,9 +1,9 @@
-import { IsInt, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class CreateStatCounterDto {
   @IsString()
   label!: string;
 
-  @IsInt()
-  label_value!: number;
+  @IsString()
+  label_value!: string;
 }
