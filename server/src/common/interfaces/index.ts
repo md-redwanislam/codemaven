@@ -8,6 +8,32 @@ export interface Admin extends RowDataPacket {
   updated_at: Date;
 }
 
+// Service section starts
+export interface ServiceModuleSection extends RowDataPacket {
+  id: string;
+
+  title: string | null;
+  slug: string | null;
+
+  display_number: number | null;
+  icon_label: string | null;
+
+  summary: string | null;
+  description: string | null;
+
+  thumbnail: string | null;
+  t_public_id: string | null;
+
+  featured_image: string | null;
+  f_public_id: string | null;
+
+  display_order: number | null;
+
+  created_at: Date;
+  updated_at: Date;
+}
+// Service section ends
+
 //  About starts here
 
 export interface MissionSection extends RowDataPacket {

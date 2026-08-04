@@ -29,7 +29,9 @@ import { PublicHeroSectionModule } from './public/about/public-hero-section/publ
 
 import { PublicMissionModule } from './public/about/public-mission/public-mission.module';
 
+import { ServiceModule } from './modules/service_module/service/service.module';
 import { PublicWorkProcessModule } from './public/about/public-work-process/public-work-process.module';
+import { PublicServiceModule } from './public/service_module/public-service-module.module';
 
 @Module({
   imports: [
@@ -63,6 +65,8 @@ import { PublicWorkProcessModule } from './public/about/public-work-process/publ
     PublicHeroSectionModule,
     PublicMissionModule,
     PublicWorkProcessModule,
+    ServiceModule,
+    PublicServiceModule,
   ],
 })
 export class AppModule {}
