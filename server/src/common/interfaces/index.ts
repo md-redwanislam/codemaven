@@ -8,6 +8,34 @@ export interface Admin extends RowDataPacket {
   updated_at: Date;
 }
 
+// Portfolio section starts
+export interface PortfolioCategory extends RowDataPacket {
+  id: string;
+  name: string | null;
+  slug: string | null;
+  display_order: string | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface PortfolioProject extends RowDataPacket {
+  id: string;
+  title: string | null;
+  slug: string | null;
+  category: string | null;
+  card_shape: string | null;
+  description: string | null;
+  cover_image: string | null;
+  public_id: string | null;
+  tags: string | null;
+  services: string | null;
+  display_order: string | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
+// Portfolio section ends
+
 // Service section starts
 export interface ServiceModuleSection extends RowDataPacket {
   id: string;
