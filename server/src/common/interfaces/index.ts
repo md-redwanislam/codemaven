@@ -27,7 +27,7 @@ export interface PortfolioProject extends RowDataPacket {
   description: string | null;
   cover_image: string | null;
   public_id: string | null;
-  tags: string | null;
+  tags: string[] | null;
   services: string | null;
   display_order: string | null;
   created_at: Date;

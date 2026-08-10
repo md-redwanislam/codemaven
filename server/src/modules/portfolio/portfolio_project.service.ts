@@ -54,7 +54,7 @@ export class PortfolioProjectService {
         dto.description,
         url,
         publicId,
-        dto.tags,
+        JSON.stringify(dto.tags),
         dto.services,
         dto.display_order,
       ],
@@ -69,28 +69,33 @@ export class PortfolioProjectService {
   async findAll() {
     const [rows] = await this.db.execute<PortfolioProject[]>(
       `
-        SELECT
-          BIN_TO_UUID(id) AS id,
-          title,
-          slug,
-          category,
-          card_shape,
-          description,
-          cover_image,
-          public_id,
-          tags,
-          services,
-          display_order,
-          created_at,
-          updated_at
-        FROM portfolio_projects
-        ORDER BY created_at DESC
-      `,
+      SELECT
+        BIN_TO_UUID(id) AS id,
+        title,
+        slug,
+        category,
+        card_shape,
+        description,
+        cover_image,
+        public_id,
+        tags,
+        services,
+        display_order,
+        created_at,
+        updated_at
+      FROM portfolio_projects
+      ORDER BY created_at DESC
+    `,
     );
+
+    const data = rows.map((row) => ({
+      ...row,
+      tags: typeof row.tags === 'string' ? JSON.parse(row.tags) : row.tags,
+    }));
 
     return {
       success: true,
-      data: rows,
+      data,
     };
   }
 
@@ -167,7 +172,7 @@ export class PortfolioProjectService {
         dto.description ?? project.description,
         coverImage,
         publicId,
-        dto.tags ?? project.tags,
+        dto.tags !== undefined ? JSON.stringify(dto.tags) : project.tags,
         dto.services ?? project.services,
         dto.display_order ?? project.display_order,
         id,

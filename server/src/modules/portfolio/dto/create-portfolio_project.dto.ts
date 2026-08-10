@@ -17,7 +17,7 @@ export class CreatePortfolioProjectDto {
   description!: string;
 
   @IsString()
-  tags!: string;
+  tags!: string[];
 
   @IsString()
   services!: string;
