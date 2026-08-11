@@ -28,7 +28,7 @@ export const databaseProvider: Provider = {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
-      connectTimeout: 30000,
+      connectTimeout: 40000,
     });
 
     const connection = await db.getConnection();
