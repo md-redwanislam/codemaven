@@ -6,22 +6,28 @@ import {
 } from '@nestjs/common';
 
 import type { Pool, ResultSetHeader } from 'mysql2/promise';
-
-import { CloudinaryService } from '../../../cloudinary/cloudinary.service';
-import { MissionSection } from '../../../common/interfaces';
-import { DATABASE_CONNECTION } from '../../../database/database.constant';
+import { CloudinaryService } from '../../cloudinary/cloudinary.service';
+import { MissionParagraph, MissionSection } from '../../common/interfaces';
+import { DATABASE_CONNECTION } from '../../database/database.constant';
 import { CreateMissionSectionDto } from './dto/create-mission.dto';
+import { CreateMissionParagraphDto } from './dto/create-mission_paragraph.dto';
 import { UpdateMissionSectionDto } from './dto/update-mission.dto';
+import { UpdateMissionParagraphDto } from './dto/update-mission_paragraph.dto';
 
 @Injectable()
 export class MissionService {
   constructor(
     @Inject(DATABASE_CONNECTION)
     private readonly db: Pool,
+
     private readonly cloudinaryService: CloudinaryService,
   ) {}
 
-  async create(dto: CreateMissionSectionDto, file: Express.Multer.File) {
+  // ============================================================
+  // Mission Section
+  // ============================================================
+
+  async createMission(dto: CreateMissionSectionDto, file: Express.Multer.File) {
     const [existing] = await this.db.execute<MissionSection[]>(
       `
       SELECT id
@@ -75,7 +81,7 @@ export class MissionService {
     };
   }
 
-  async findAll() {
+  async findAllMissions() {
     const [rows] = await this.db.execute<MissionSection[]>(
       `
       SELECT
@@ -98,7 +104,7 @@ export class MissionService {
     };
   }
 
-  async update(
+  async updateMission(
     id: string,
     dto: UpdateMissionSectionDto,
     file?: Express.Multer.File,
@@ -129,12 +135,12 @@ export class MissionService {
     if (dto.heading && dto.heading !== section.heading) {
       const [duplicate] = await this.db.execute<MissionSection[]>(
         `
-        SELECT id
-        FROM mission_section
-        WHERE heading = ?
-        AND id != UUID_TO_BIN(?)
-        LIMIT 1
-        `,
+          SELECT id
+          FROM mission_section
+          WHERE heading = ?
+          AND id != UUID_TO_BIN(?)
+          LIMIT 1
+          `,
         [dto.heading, id],
       );
 
@@ -189,7 +195,7 @@ export class MissionService {
     };
   }
 
-  async remove(id: string) {
+  async removeMission(id: string) {
     const [rows] = await this.db.execute<MissionSection[]>(
       `
       SELECT
@@ -222,6 +228,144 @@ export class MissionService {
     return {
       success: true,
       message: 'Mission section deleted successfully.',
+    };
+  }
+
+  // ============================================================
+  // Mission Paragraph
+  // ============================================================
+
+  async createMissionParagraph(dto: CreateMissionParagraphDto) {
+    const [existing] = await this.db.execute<MissionParagraph[]>(
+      `
+        SELECT id
+        FROM mission_paragraph
+        WHERE TRIM(paragraph) = TRIM(?)
+        LIMIT 1
+        `,
+      [dto.paragraph],
+    );
+
+    if (existing.length > 0) {
+      throw new BadRequestException('Mission paragraph already exists.');
+    }
+
+    await this.db.execute<ResultSetHeader>(
+      `
+      INSERT INTO mission_paragraph
+      (
+        paragraph
+      )
+      VALUES
+      (?)
+      `,
+      [dto.paragraph],
+    );
+
+    return {
+      success: true,
+      message: 'Mission paragraph created successfully.',
+    };
+  }
+
+  async findAllMissionParagraphs() {
+    const [rows] = await this.db.execute<MissionParagraph[]>(
+      `
+        SELECT
+          BIN_TO_UUID(id) AS id,
+          paragraph,
+          created_at,
+          updated_at
+        FROM mission_paragraph
+        ORDER BY created_at DESC
+        `,
+    );
+
+    return {
+      success: true,
+      data: rows,
+    };
+  }
+
+  async updateMissionParagraph(id: string, dto: UpdateMissionParagraphDto) {
+    const [rows] = await this.db.execute<MissionParagraph[]>(
+      `
+        SELECT
+          BIN_TO_UUID(id) AS id,
+          paragraph
+        FROM mission_paragraph
+        WHERE id = UUID_TO_BIN(?)
+        LIMIT 1
+        `,
+      [id],
+    );
+
+    if (rows.length === 0) {
+      throw new NotFoundException('Mission paragraph not found.');
+    }
+
+    const paragraph = rows[0];
+
+    if (dto.paragraph && dto.paragraph !== paragraph.paragraph) {
+      const [duplicate] = await this.db.execute<MissionParagraph[]>(
+        `
+          SELECT id
+          FROM mission_paragraph
+          WHERE TRIM(paragraph) = TRIM(?)
+          AND id != UUID_TO_BIN(?)
+          LIMIT 1
+          `,
+        [dto.paragraph, id],
+      );
+
+      if (duplicate.length > 0) {
+        throw new BadRequestException('Mission paragraph already exists.');
+      }
+    }
+
+    await this.db.execute<ResultSetHeader>(
+      `
+      UPDATE mission_paragraph
+      SET
+        paragraph = ?
+      WHERE id = UUID_TO_BIN(?)
+      `,
+      [dto.paragraph ?? paragraph.paragraph, id],
+    );
+
+    return {
+      success: true,
+      message: 'Mission paragraph updated successfully.',
+    };
+  }
+
+  async removeMissionParagraph(id: string) {
+    const [rows] = await this.db.execute<MissionParagraph[]>(
+      `
+        SELECT id
+        FROM mission_paragraph
+        WHERE id = UUID_TO_BIN(?)
+        LIMIT 1
+        `,
+      [id],
+    );
+
+    if (rows.length === 0) {
+      throw new NotFoundException('Mission paragraph not found.');
+    }
+
+    await this.db.execute<ResultSetHeader>(
+      `
+      DELETE
+      FROM mission_paragraph
+      WHERE id = UUID_TO_BIN(?)
+      `,
+      [id],
+    );
+
+    return {
+      success: true,
+      message: 'Mission paragraph deleted successfully.',
     };
   }
 }

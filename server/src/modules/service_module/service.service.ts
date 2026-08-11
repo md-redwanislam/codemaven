@@ -7,9 +7,9 @@ import {
 
 import type { Pool, ResultSetHeader } from 'mysql2/promise';
 
-import { CloudinaryService } from '../../../cloudinary/cloudinary.service';
-import { ServiceModuleSection } from '../../../common/interfaces';
-import { DATABASE_CONNECTION } from '../../../database/database.constant';
+import { CloudinaryService } from '../../cloudinary/cloudinary.service';
+import { ServiceModuleSection } from '../../common/interfaces';
+import { DATABASE_CONNECTION } from '../../database/database.constant';
 import { CreateServiceModuleSectionDto } from './dto/create-service.dto';
 import { UpdateServiceModuleSectionDto } from './dto/update-service.dto';
 

@@ -13,8 +13,8 @@ import {
 
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 
-import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
-import { multerOptions } from '../../../common/utils/multer';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { multerOptions } from '../../common/utils/multer';
 import { CreateServiceModuleSectionDto } from './dto/create-service.dto';
 import { UpdateServiceModuleSectionDto } from './dto/update-service.dto';
 import { ServiceModuleSectionService } from './service.service';

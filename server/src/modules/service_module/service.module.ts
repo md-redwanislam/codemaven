@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { CloudinaryModule } from '../../../cloudinary/cloudinary.module';
-import { DatabaseModule } from '../../../database/database.module';
+import { CloudinaryModule } from '../../cloudinary/cloudinary.module';
+import { DatabaseModule } from '../../database/database.module';
 import { ServiceModuleSectionController } from './service.controller';
 import { ServiceModuleSectionService } from './service.service';
 

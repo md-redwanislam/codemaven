@@ -2,9 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import config from './common/config/config';
 import { DatabaseModule } from './database/database.module';
-import { AboutHeroModule } from './modules/about/hero/hero.module';
-import { MissionModule } from './modules/about/mission/mission.module';
-import { WorkProcessModule } from './modules/about/work-process/work-process.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ChooseUsModule } from './modules/home/choose_us/choose_us.module';
 import { ContactSectionModule } from './modules/home/contact-section/contact-section.module';
@@ -16,8 +13,9 @@ import { ServiceSectionModule } from './modules/home/service-section/service-sec
 import { SolutionsSectionModule } from './modules/home/solutions-section/solutions-section.module';
 import { StatisticModule } from './modules/home/statistic/statistic.module';
 
+import { AboutModule } from './modules/about/about.module';
 import { PortfolioModule } from './modules/portfolio/portfolio.module';
-import { ServiceModule } from './modules/service_module/service/service.module';
+import { ServiceModule } from './modules/service_module/service.module';
 import { PublicAboutModule } from './public/about/public-about.module';
 import { PublicHomeModule } from './public/home/public-home.module';
 import { PublicPortfolioModule } from './public/portfolio/public-portfolio.module';
@@ -41,9 +39,7 @@ import { PublicServiceModule } from './public/service_module/public-service-modu
     ContactSectionModule,
     PublicHomeModule,
     StatisticModule,
-    MissionModule,
-    WorkProcessModule,
-    AboutHeroModule,
+    AboutModule,
     PublicAboutModule,
     ServiceModule,
     PublicServiceModule,
