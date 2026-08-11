@@ -7,9 +7,9 @@ import {
 
 import type { Pool, ResultSetHeader } from 'mysql2/promise';
 
-import type { Statistic } from '../../../common/interfaces';
+import type { Statistic } from '../../common/interfaces';
 
-import { DATABASE_CONNECTION } from '../../../database/database.constant';
+import { DATABASE_CONNECTION } from '../../database/database.constant';
 
 import { CreateStatisticDto } from './dto/create-statistic.dto';
 import { UpdateStatisticDto } from './dto/update-statistic.dto';
@@ -21,7 +21,7 @@ export class StatisticService {
     private readonly db: Pool,
   ) {}
 
-  async create(dto: CreateStatisticDto) {
+  async createStatistic(dto: CreateStatisticDto) {
     const [existing] = await this.db.execute<Statistic[]>(
       `
       SELECT id
@@ -57,7 +57,7 @@ export class StatisticService {
     };
   }
 
-  async findAll() {
+  async findStatistics() {
     const [rows] = await this.db.execute<Statistic[]>(
       `
       SELECT
@@ -77,7 +77,7 @@ export class StatisticService {
     };
   }
 
-  async update(id: string, dto: UpdateStatisticDto) {
+  async updateStatistic(id: string, dto: UpdateStatisticDto) {
     const [rows] = await this.db.execute<Statistic[]>(
       `
       SELECT
@@ -137,7 +137,7 @@ export class StatisticService {
     };
   }
 
-  async remove(id: string) {
+  async removeStatistic(id: string) {
     const [rows] = await this.db.execute<Statistic[]>(
       `
       SELECT id

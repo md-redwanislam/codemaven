@@ -7,8 +7,8 @@ import {
 
 import type { Pool, ResultSetHeader } from 'mysql2/promise';
 
-import { HeroSection } from '../../../common/interfaces';
-import { DATABASE_CONNECTION } from '../../../database/database.constant';
+import { HeroSection } from '../../common/interfaces';
+import { DATABASE_CONNECTION } from '../../database/database.constant';
 import { CreateHeroDto } from './dto/create-hero.dto';
 import { UpdateHeroDto } from './dto/update-hero.dto';
 
@@ -19,7 +19,7 @@ export class HeroService {
     private readonly db: Pool,
   ) {}
 
-  async create(dto: CreateHeroDto) {
+  async createHero(dto: CreateHeroDto) {
     const [existing] = await this.db.execute<HeroSection[]>(
       `
     SELECT id
@@ -70,7 +70,7 @@ export class HeroService {
     };
   }
 
-  async findOne() {
+  async findHero() {
     const [rows] = await this.db.execute<HeroSection[]>(
       `
     SELECT
@@ -105,7 +105,7 @@ export class HeroService {
     };
   }
 
-  async update(id: string, dto: UpdateHeroDto) {
+  async updateHero(id: string, dto: UpdateHeroDto) {
     const [rows] = await this.db.execute<HeroSection[]>(
       `
     SELECT *
@@ -159,7 +159,7 @@ export class HeroService {
     };
   }
 
-  async remove(id: string) {
+  async removeHero(id: string) {
     const [rows] = await this.db.execute<HeroSection[]>(
       `
     SELECT id

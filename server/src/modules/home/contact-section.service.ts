@@ -7,8 +7,8 @@ import {
 
 import type { Pool, ResultSetHeader } from 'mysql2/promise';
 
-import { ContactSection } from '../../../common/interfaces';
-import { DATABASE_CONNECTION } from '../../../database/database.constant';
+import { ContactSection } from '../../common/interfaces';
+import { DATABASE_CONNECTION } from '../../database/database.constant';
 import { CreateContactSectionDto } from './dto/create-contact-section.dto';
 import { UpdateContactSectionDto } from './dto/update-contact-section.dto';
 
@@ -19,7 +19,7 @@ export class ContactSectionService {
     private readonly db: Pool,
   ) {}
 
-  async create(dto: CreateContactSectionDto) {
+  async createContactSection(dto: CreateContactSectionDto) {
     const [existing] = await this.db.execute<ContactSection[]>(
       `
         SELECT id
@@ -54,7 +54,7 @@ export class ContactSectionService {
     };
   }
 
-  async findAll() {
+  async findContactSection() {
     const [rows] = await this.db.execute<ContactSection[]>(
       `
         SELECT
@@ -75,7 +75,7 @@ export class ContactSectionService {
     };
   }
 
-  async update(id: string, dto: UpdateContactSectionDto) {
+  async updateContactSection(id: string, dto: UpdateContactSectionDto) {
     const [rows] = await this.db.execute<ContactSection[]>(
       `
         SELECT
@@ -136,7 +136,7 @@ export class ContactSectionService {
     };
   }
 
-  async remove(id: string) {
+  async removeContactSection(id: string) {
     const [rows] = await this.db.execute<ContactSection[]>(
       `
         SELECT id

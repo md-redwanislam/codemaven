@@ -7,8 +7,8 @@ import {
 
 import type { Pool, ResultSetHeader } from 'mysql2/promise';
 
-import { CTA } from '../../../common/interfaces';
-import { DATABASE_CONNECTION } from '../../../database/database.constant';
+import { CTA } from '../../common/interfaces';
+import { DATABASE_CONNECTION } from '../../database/database.constant';
 import { CreateCtaDto } from './dto/create-cta.dto';
 import { UpdateCtaDto } from './dto/update-cta.dto';
 
@@ -19,7 +19,7 @@ export class CtaService {
     private readonly db: Pool,
   ) {}
 
-  async create(dto: CreateCtaDto) {
+  async createCta(dto: CreateCtaDto) {
     const [existing] = await this.db.execute<CTA[]>(
       `
       SELECT id
@@ -62,7 +62,7 @@ export class CtaService {
     };
   }
 
-  async findOne() {
+  async findCta() {
     const [rows] = await this.db.execute<CTA[]>(
       `
       SELECT
@@ -86,7 +86,7 @@ export class CtaService {
     };
   }
 
-  async update(id: string, dto: UpdateCtaDto) {
+  async updateCta(id: string, dto: UpdateCtaDto) {
     const [rows] = await this.db.execute<CTA[]>(
       `
       SELECT
@@ -139,7 +139,7 @@ export class CtaService {
     };
   }
 
-  async remove(id: string) {
+  async removeCta(id: string) {
     const [rows] = await this.db.execute<CTA[]>(
       `
       SELECT id
