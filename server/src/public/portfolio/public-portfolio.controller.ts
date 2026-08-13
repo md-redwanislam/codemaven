@@ -14,4 +14,19 @@ export class PublicPortfolioController {
   findAllProjects() {
     return this.PortfolioService.findAllProjects();
   }
+
+  @Get('hero')
+  findHero() {
+    return this.PortfolioService.findHero();
+  }
+
+  @Get('showcase')
+  findShowcase() {
+    return this.PortfolioService.findShowcase();
+  }
+
+  @Get('state')
+  findAllStates() {
+    return this.PortfolioService.findAllStates();
+  }
 }
