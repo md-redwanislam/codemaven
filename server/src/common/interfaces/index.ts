@@ -9,6 +9,38 @@ export interface Admin extends RowDataPacket {
 }
 
 // Portfolio section starts
+export interface PortfolioHeroSection extends RowDataPacket {
+  id: string;
+  eyebrow_text: string | null;
+  headline_1: string | null;
+  headline_2: string | null;
+  description: string | null;
+  primary_button_text: string | null;
+  primary_button_url: string | null;
+  secondary_button_text: string | null;
+  secondary_button_url: string | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface PortfolioShowcaseSection extends RowDataPacket {
+  id: string;
+  eyebrow_text: string | null;
+  headline_1: string | null;
+  headline_2: string | null;
+  description: string | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface PortfolioStateSection extends RowDataPacket {
+  id: string;
+  label: string | null;
+  label_value: string | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
 export interface PortfolioCategory extends RowDataPacket {
   id: string;
   name: string | null;

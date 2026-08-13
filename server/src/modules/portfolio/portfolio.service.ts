@@ -9,7 +9,13 @@ import type { Pool, ResultSetHeader } from 'mysql2/promise';
 
 import { CloudinaryService } from '../../cloudinary/cloudinary.service';
 
-import { PortfolioCategory, PortfolioProject } from '../../common/interfaces';
+import {
+  PortfolioCategory,
+  PortfolioHeroSection,
+  PortfolioProject,
+  PortfolioShowcaseSection,
+  PortfolioStateSection,
+} from '../../common/interfaces';
 
 import { DATABASE_CONNECTION } from '../../database/database.constant';
 
@@ -19,6 +25,15 @@ import { UpdatePortfolioCategoryDto } from './dto/update-portfolio_category.dto'
 import { CreatePortfolioProjectDto } from './dto/create-portfolio_project.dto';
 import { UpdatePortfolioProjectDto } from './dto/update-portfolio_project.dto';
 
+import { CreatePortfolioHeroDto } from './dto/create-portfolio_hero.dto';
+import { UpdatePortfolioHeroDto } from './dto/update-portfolio_hero.dto';
+
+import { CreatePortfolioShowcaseDto } from './dto/create-portfolio_showcase.dto';
+import { UpdatePortfolioShowcaseDto } from './dto/update-portfolio_showcase.dto';
+
+import { CreatePortfolioStateDto } from './dto/create-portfolio_state.dto';
+import { UpdatePortfolioStateDto } from './dto/update-portfolio_state.dto';
+
 @Injectable()
 export class PortfolioService {
   constructor(
@@ -27,6 +42,411 @@ export class PortfolioService {
 
     private readonly cloudinaryService: CloudinaryService,
   ) {}
+
+  // ============================================================
+  // Portfolio Hero
+  // ============================================================
+
+  async createHero(dto: CreatePortfolioHeroDto) {
+    const [existing] = await this.db.execute<PortfolioHeroSection[]>(
+      `
+    SELECT id
+    FROM portfolio_hero_section
+    LIMIT 1
+    `,
+    );
+
+    if (existing.length > 0) {
+      throw new BadRequestException('Portfolio hero section already exists.');
+    }
+
+    await this.db.execute<ResultSetHeader>(
+      `
+    INSERT INTO portfolio_hero_section (
+      eyebrow_text,
+      headline_1,
+      headline_2,
+      description,
+      primary_button_text,
+      primary_button_url,
+      secondary_button_text,
+      secondary_button_url
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `,
+      [
+        dto.eyebrow_text,
+        dto.headline_1,
+        dto.headline_2,
+        dto.description,
+        dto.primary_button_text,
+        dto.primary_button_url,
+        dto.secondary_button_text,
+        dto.secondary_button_url,
+      ],
+    );
+
+    return {
+      success: true,
+      message: 'Portfolio hero section created successfully.',
+    };
+  }
+
+  async findHero() {
+    const [rows] = await this.db.execute<PortfolioHeroSection[]>(
+      `
+    SELECT
+      BIN_TO_UUID(id) AS id,
+      eyebrow_text,
+      headline_1,
+      headline_2,
+      description,
+      primary_button_text,
+      primary_button_url,
+      secondary_button_text,
+      secondary_button_url,
+      created_at,
+      updated_at
+    FROM portfolio_hero_section
+    LIMIT 1
+    `,
+    );
+
+    if (rows.length === 0) {
+      throw new NotFoundException('Portfolio hero section not found.');
+    }
+
+    return {
+      success: true,
+      data: rows[0],
+    };
+  }
+
+  async updateHero(dto: UpdatePortfolioHeroDto) {
+    const [rows] = await this.db.execute<PortfolioHeroSection[]>(
+      `
+    SELECT
+      BIN_TO_UUID(id) AS id,
+      eyebrow_text,
+      headline_1,
+      headline_2,
+      description,
+      primary_button_text,
+      primary_button_url,
+      secondary_button_text,
+      secondary_button_url
+    FROM portfolio_hero_section
+    LIMIT 1
+    `,
+    );
+
+    if (rows.length === 0) {
+      throw new NotFoundException('Portfolio hero section not found.');
+    }
+
+    const hero = rows[0];
+
+    await this.db.execute<ResultSetHeader>(
+      `
+    UPDATE portfolio_hero_section
+    SET
+      eyebrow_text = ?,
+      headline_1 = ?,
+      headline_2 = ?,
+      description = ?,
+      primary_button_text = ?,
+      primary_button_url = ?,
+      secondary_button_text = ?,
+      secondary_button_url = ?
+    WHERE id = UUID_TO_BIN(?)
+    `,
+      [
+        dto.eyebrow_text ?? hero.eyebrow_text,
+        dto.headline_1 ?? hero.headline_1,
+        dto.headline_2 ?? hero.headline_2,
+        dto.description ?? hero.description,
+        dto.primary_button_text ?? hero.primary_button_text,
+        dto.primary_button_url ?? hero.primary_button_url,
+        dto.secondary_button_text ?? hero.secondary_button_text,
+        dto.secondary_button_url ?? hero.secondary_button_url,
+        hero.id,
+      ],
+    );
+
+    return {
+      success: true,
+      message: 'Portfolio hero section updated successfully.',
+    };
+  }
+
+  async removeHero() {
+    const [rows] = await this.db.execute<PortfolioHeroSection[]>(
+      `
+    SELECT id
+    FROM portfolio_hero_section
+    LIMIT 1
+    `,
+    );
+
+    if (rows.length === 0) {
+      throw new NotFoundException('Portfolio hero section not found.');
+    }
+
+    await this.db.execute<ResultSetHeader>(
+      `
+    DELETE FROM portfolio_hero_section
+    LIMIT 1
+    `,
+    );
+
+    return {
+      success: true,
+      message: 'Portfolio hero section deleted successfully.',
+    };
+  }
+
+  // ============================================================
+  // Portfolio Showcase
+  // ============================================================
+
+  async createShowcase(dto: CreatePortfolioShowcaseDto) {
+    const [existing] = await this.db.execute<PortfolioShowcaseSection[]>(
+      `
+      SELECT id
+      FROM portfolio_showcase_section
+      LIMIT 1
+      `,
+    );
+
+    if (existing.length > 0) {
+      throw new BadRequestException(
+        'Portfolio showcase section already exists.',
+      );
+    }
+
+    await this.db.execute<ResultSetHeader>(
+      `
+    INSERT INTO portfolio_showcase_section (
+      eyebrow_text,
+      headline_1,
+      headline_2,
+      description
+    )
+    VALUES (?, ?, ?, ?)
+    `,
+      [dto.eyebrow_text, dto.headline_1, dto.headline_2, dto.description],
+    );
+
+    return {
+      success: true,
+      message: 'Portfolio showcase section created successfully.',
+    };
+  }
+
+  async findShowcase() {
+    const [rows] = await this.db.execute<PortfolioShowcaseSection[]>(
+      `
+      SELECT
+        BIN_TO_UUID(id) AS id,
+        eyebrow_text,
+        headline_1,
+        headline_2,
+        description,
+        created_at,
+        updated_at
+      FROM portfolio_showcase_section
+      LIMIT 1
+      `,
+    );
+
+    if (rows.length === 0) {
+      throw new NotFoundException('Portfolio showcase section not found.');
+    }
+
+    return {
+      success: true,
+      data: rows[0],
+    };
+  }
+
+  async updateShowcase(dto: UpdatePortfolioShowcaseDto) {
+    const [rows] = await this.db.execute<PortfolioShowcaseSection[]>(
+      `
+      SELECT
+        BIN_TO_UUID(id) AS id,
+        eyebrow_text,
+        headline_1,
+        headline_2,
+        description
+      FROM portfolio_showcase_section
+      LIMIT 1
+      `,
+    );
+
+    if (rows.length === 0) {
+      throw new NotFoundException('Portfolio showcase section not found.');
+    }
+
+    const showcase = rows[0];
+
+    await this.db.execute<ResultSetHeader>(
+      `
+    UPDATE portfolio_showcase_section
+    SET
+      eyebrow_text = ?,
+      headline_1 = ?,
+      headline_2 = ?,
+      description = ?
+    WHERE id = UUID_TO_BIN(?)
+    `,
+      [
+        dto.eyebrow_text ?? showcase.eyebrow_text,
+        dto.headline_1 ?? showcase.headline_1,
+        dto.headline_2 ?? showcase.headline_2,
+        dto.description ?? showcase.description,
+        showcase.id,
+      ],
+    );
+
+    return {
+      success: true,
+      message: 'Portfolio showcase section updated successfully.',
+    };
+  }
+
+  async removeShowcase() {
+    const [rows] = await this.db.execute<PortfolioShowcaseSection[]>(
+      `
+      SELECT id
+      FROM portfolio_showcase_section
+      LIMIT 1
+      `,
+    );
+
+    if (rows.length === 0) {
+      throw new NotFoundException('Portfolio showcase section not found.');
+    }
+
+    await this.db.execute<ResultSetHeader>(
+      `
+    DELETE FROM portfolio_showcase_section
+    LIMIT 1
+    `,
+    );
+
+    return {
+      success: true,
+      message: 'Portfolio showcase section deleted successfully.',
+    };
+  }
+
+  // ============================================================
+  // Portfolio State Counter
+  // ============================================================
+
+  async createState(dto: CreatePortfolioStateDto) {
+    await this.db.execute<ResultSetHeader>(
+      `
+    INSERT INTO portfolio_state_section (
+      label,
+      label_value
+    )
+    VALUES (?, ?)
+    `,
+      [dto.label, dto.label_value],
+    );
+
+    return {
+      success: true,
+      message: 'Portfolio state created successfully.',
+    };
+  }
+
+  async findAllStates() {
+    const [rows] = await this.db.execute<PortfolioStateSection[]>(
+      `
+    SELECT
+      BIN_TO_UUID(id) AS id,
+      label,
+      label_value,
+      created_at,
+      updated_at
+    FROM portfolio_state_section
+    ORDER BY created_at DESC
+    `,
+    );
+
+    return {
+      success: true,
+      data: rows,
+    };
+  }
+
+  async updateState(id: string, dto: UpdatePortfolioStateDto) {
+    const [rows] = await this.db.execute<PortfolioStateSection[]>(
+      `
+    SELECT
+      BIN_TO_UUID(id) AS id,
+      label,
+      label_value
+    FROM portfolio_state_section
+    WHERE id = UUID_TO_BIN(?)
+    LIMIT 1
+    `,
+      [id],
+    );
+
+    if (rows.length === 0) {
+      throw new NotFoundException('Portfolio state not found.');
+    }
+
+    const state = rows[0];
+
+    await this.db.execute<ResultSetHeader>(
+      `
+    UPDATE portfolio_state_section
+    SET
+      label = ?,
+      label_value = ?
+    WHERE id = UUID_TO_BIN(?)
+    `,
+      [dto.label ?? state.label, dto.label_value ?? state.label_value, id],
+    );
+
+    return {
+      success: true,
+      message: 'Portfolio state updated successfully.',
+    };
+  }
+
+  async removeState(id: string) {
+    const [rows] = await this.db.execute<PortfolioStateSection[]>(
+      `
+    SELECT id
+    FROM portfolio_state_section
+    WHERE id = UUID_TO_BIN(?)
+    LIMIT 1
+    `,
+      [id],
+    );
+
+    if (rows.length === 0) {
+      throw new NotFoundException('Portfolio state not found.');
+    }
+
+    await this.db.execute<ResultSetHeader>(
+      `
+    DELETE FROM portfolio_state_section
+    WHERE id = UUID_TO_BIN(?)
+    `,
+      [id],
+    );
+
+    return {
+      success: true,
+      message: 'Portfolio state deleted successfully.',
+    };
+  }
 
   // ============================================================
   // Portfolio Category
