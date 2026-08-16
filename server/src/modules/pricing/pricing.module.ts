@@ -6,5 +6,6 @@ import { PricingController } from './pricing.controller';
 @Module({
   controllers: [PricingController],
   providers: [HeroService, PricingCtaService],
+  exports: [HeroService, PricingCtaService],
 })
 export class PricingModule {}
