@@ -12,6 +12,7 @@ import { PublicAboutModule } from './public/about/public-about.module';
 import { PublicHomeModule } from './public/home/public-home.module';
 import { PublicPortfolioModule } from './public/portfolio/public-portfolio.module';
 import { PublicServiceModule } from './public/service_module/public-service-module.module';
+import { PricingModule } from './modules/pricing/pricing.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { PublicServiceModule } from './public/service_module/public-service-modu
     PublicAboutModule,
     PublicServiceModule,
     PublicPortfolioModule,
+    PricingModule,
   ],
 })
 export class AppModule {}

@@ -8,6 +8,29 @@ export interface Admin extends RowDataPacket {
   updated_at: Date;
 }
 
+// Pricing section stars
+export interface PriceHeroSection extends RowDataPacket {
+  id: string;
+  eyebrow_text: string | null;
+  headline_1: string | null;
+  headline_2: string | null;
+  description: string | null;
+  primary_button_text: string | null;
+  primary_button_url: string | null;
+  secondary_button_text: string | null;
+  secondary_button_url: string | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface PricingHeroTrust extends RowDataPacket {
+  id: string;
+  lable: string | null;
+  display_order: string | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
 // Portfolio section starts
 export interface PortfolioHeroSection extends RowDataPacket {
   id: string;
